@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="_csrf" content="4eadc7ea-2a8c-4be3-81de-c5baaef5dbc4"/>
+    <meta name="_csrf_header" content="X-CSRF-TOKEN"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bangladesh NID Application System</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&display=swap" rel="stylesheet">
+
+    <link href='https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.0/semantic.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/jquery.loadmask.css' rel='stylesheet'/>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/jquery.noty.css' rel='stylesheet'/>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/noty_theme_default.css' rel='stylesheet'/>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/alertify.core.css' rel='stylesheet'/>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/alertify.default.css' rel='stylesheet'/>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/alertify.tigerit.css' rel='stylesheet'/>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/fonts.css' rel='stylesheet'/>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/main.css' rel='stylesheet'/>
+
+    
+
+
+
+
+<script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/polyfill.js"></script>
+<script type="application/javascript">
+window.showLoadingEnabled=true;
+window.contextPath = "/nid-pub";
+window.locale = "bn";
+window.mqtthost = "wss://services.nidw.gov.bd:443/mqtt";
+window.loadingMessage = "অপেক্ষা করুন...";
+window.pageReloadMessage = "আপনি এই ক্রিয়াটি সম্পাদন করলে আপনি আপনার বর্তমান তথ্য হারাবেন।";
+window.cookiesDisabledMessage = "Cookies are disabled. Please enable cookies from your browser's settings and try again.";
+window.correctionRequestCancelConfirmation = "আপনি কি নিশ্চিত আপনার সংশোধন অনুরোধ বাতিল করতে চান?"
+window.error = [];
+window.error['403'] = "Forbidden Resource. Probably your browser cookie data has been altered. Please refresh the page and try again.";
+window.error['500'] = "সার্ভারের অভ্যান্তরিন ত্রুটি হয়েছে!!";
+window.error['unknown'] = "অপ্রত্যাশিত সমস্যার জন্য দুঃখিত। একটু পরে আবার চেষ্টা করুন।";
+window.lookupLoadingError = "ডাটা লোড করতে সমস্যা হচ্ছে। কিছুক্ষণ পরে আবার চেষ্টা করুন";
+window.sessionExpiredMessage = "আপনার সেশনের মেয়াদ উত্তীর্ণ হয়েছে";
+window.afrsError = "অপ্রত্যাশিত সমস্যার জন্য দুঃখিত। দয়া করে কিউআর কোডটি স্ক্যান করুন এবং আবার চেষ্টা করুন।"
+window.afrsNoMatch = "আপনার ছবির সাথে মিল পাওয়া যায়নি। অনুগ্রহপূর্বক আবার চেষ্টা করুন। সমস্যাটি এরপরও অব্যাহত থাকলে বাংলাদেশ নির্বাচন কমিশনে যোগাযোগ করুন।"
+window.uploadLimit = 1000000;
+const _fileType = new Map();
+_fileType.set("image/png", "png");
+_fileType.set("image/jpeg", "jpg");
+_fileType.set("application/pdf", "pdf");
+window._fileType = _fileType;
+window.attachedFileLimit = 10;
+window.uploadLimitMessage = "ডকুমেন্ট আপলোড হয়নি। ডকুমেন্ট এর সাইজ সর্বোচ্চ ১ মেগাবাইট হতে পারবে। ডকুমেন্ট হিসাবে png, jpg এবং pdf গ্রহণযোগ্য এবং সর্বোচ্চ ১৫টি ডকুমেন্ট সংযুক্ত করতে পারবেন।";
+window.error['networkConnection'] = "নেটওয়ার্ক সংযোগে সমস্যা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন";
+window.messageConfigs={
+    messages: {
+        "adjudication.support.message":"বার্তা",
+        'msg.loading':"অপেক্ষা করুন...",
+        "adjudication.message.failed":"বার্তা প্রেরণ করা যায়নি",
+        "adjudication.message.send":"বার্তা প্রেরিত হয়েছে",
+        "adjudication.submit":"প্রতিউত্তর",
+        "doc.list.remove.item":"মুছে ফেলুন"
+    }
+};
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.0/semantic.min.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/vendor/jquery.numeric.min.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/vendor/jquery.loadmask.min.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/vendor/jquery.noty.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alertify.js/0.3.10/alertify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/filesize/3.1.2/filesize.min.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/vendor/md5.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/cookie-jar.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/ajax-setup.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/async-form.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/template-loader.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/active-menu.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/jquery.numeric.init.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/enter-key-handler.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/portal-utils.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/vendor/select2.min.js"></script>
+    <link type='text/css' href='/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/styles/select2.min.css' rel='stylesheet'/>
+    <script type="application/javascript">
+        $(document).ready(function () {
+            let locale = "bn";
+            let root = document.documentElement;
+
+            if (locale === "en") {
+                let englishFont = getComputedStyle(root).getPropertyValue('--font-english');
+                let fontSize = getComputedStyle(root).getPropertyValue('--default-font-size-english');
+                root.style.setProperty('--font-family-primary', englishFont);
+                root.style.setProperty('--base-font-size', fontSize);
+            }
+            else if (locale === "bn") {
+                let banglaFont = getComputedStyle(root).getPropertyValue('--font-bangla');
+                let fontSize = getComputedStyle(root).getPropertyValue('--default-font-size-bangla');
+                root.style.setProperty('--font-family-primary', banglaFont);
+                root.style.setProperty('--base-font-size', fontSize);
+            }
+
+            let nsAgent = localStorage.getItem("ns_agent");
+            if (nsAgent != null && nsAgent !== "") {
+                let messageTemplate = $("#agent-info-placeholder").text();
+                let finalMessage = messageTemplate.replace("{0}", nsAgent);
+
+                $("#agent-info-div").show();
+                $("#agent-info-placeholder").text(finalMessage);
+            }
+
+            $("#user").on("mouseover", function () {
+                $("#settings").show();
+            }).on("mouseleave", function () {
+                $("#settings").hide();
+            });
+            let success = portalUtils.getParameterByName("success");
+            if (success) {
+                noty({
+                    layout: 'bottomLeft',
+                    theme: 'noty_theme_default',
+                    type: 'success',
+                    text: success,
+                    timeout: false
+                });
+            }
+            let error = portalUtils.getParameterByName("error");
+            if (error) {
+                noty({
+                    layout: 'bottomLeft',
+                    theme: 'noty_theme_default',
+                    type: 'error',
+                    text: error,
+                    timeout: false
+                });
+            }
+
+            $(".ui.button.view-profile").on("click", function () {
+                let location = $(this).find("a").attr("href");
+                window.location = location;
+            });
+
+            $('#menu-button').click(function () {
+                $('.ui.sidebar').sidebar('toggle');
+            });
+        });
+    </script>
+
+    
+    <style type="text/css">
+        /*needed for jquery ui autocomplete*/
+        .ui-autocomplete {
+            max-height: 100px;
+            max-width: 175px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/tabular-menu-switcher.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/page-reload-handler.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/lib/lookup-loader.js"></script>
+    <script type="text/javascript" src="/nid-pub/resources/69789d86db5f5dee97fb0384b90fc028/scripts/profile.js"></script>
+
+</head>
+<body>
+
+<div id="container">
+    <div class="ui grid wrapper non-rounded-corners claim-right wrapper-padding-bottom">
+        <div class="top-bar">
+            <div class="badge">
+                <img src="photo.jpg" alt="সুমাইয়া আক্তার" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+            </div>
+            <div class="ui large menu topbar-desktop">
+                <div class="item pub-title fixed-font-family-english">Bangladesh NID Application System</div>
+                <div id="agent-info-div" class="item">
+                    <label id="agent-info-placeholder">অপারেটর: {0}</label>
+                </div>
+                <div class="right menu">
+                    <div class="ui dropdown item" id="user">
+                        <i class="user icon"></i><span class="fixed-font-family-english18">ecskayes11122003</span><i class="dropdown icon"></i>
+                        <div class="menu" style="display: none;" id="settings">
+                            
+                                <a class="item"
+                                   href="/nid-pub/citizen-home/reset-password/">
+                                    পাসওয়ার্ড পরিবর্তন
+                                </a>
+                            
+                            <a class="item"
+                               href="/nid-pub/citizen-home/update-contact/">
+                                মোবাইল/ইমেইল পরিবর্তন
+                            </a>
+                        </div>
+                    </div>
+                    <div class="link item" id="logout-link">লগআউট</div>
+                </div>
+            </div>
+            <div class="topbar-mobile top-item">
+                <div class="title">
+                    <p>বাংলাদেশ নির্বাচন কমিশন</p>
+                </div>
+                <div>
+                    <i class="fas fa-bars" style="cursor: pointer;" id="menu-button"></i>
+                </div>
+            </div>
+        </div>
+        <div id="top-menu" class="ui menu">
+            <a class="item" href="/nid-pub/citizen-home/">হোম
+            </a>
+            
+                
+                    <a class="item" href="/nid-pub/citizen-home/profile/">প্রোফাইল
+                    </a>
+                
+                
+            
+            
+                <a class="item" href="/nid-pub/citizen-home/reissue/">রিইস্যু
+                </a>
+            
+        </div>
+        <div class="sixteen wide column container-padding">
+            <div class="ui sidebar right vertical menu">
+                <div class="link item">
+                    <a href="/nid-pub/citizen-home/">
+                        <i class="home icon"></i>হোম
+                    </a>
+                </div>
+                
+                    
+                        <div class="link item">
+                            <a href="/nid-pub/citizen-home/profile/">
+                                <i class="user icon"></i>প্রোফাইল
+                            </a>
+                        </div>
+                    
+                    
+                
+                
+                    <div class="link item">
+                        <a href="/nid-pub/citizen-home/reissue/">
+                            <i class="fas fa-id-card"></i>রিইস্যু
+                        </a>
+                    </div>
+                
+                
+                    <div class="link item">
+                        <a href="/nid-pub/citizen-home/reset-password/">
+                            <i class="fas fa-undo"></i>পাসওয়ার্ড পরিবর্তন
+                        </a>
+                    </div>
+                
+                <div class="link item">
+                    <a href="/nid-pub/citizen-home/update-contact/">
+                        <i class="mobile alternate icon"></i>মোবাইল/ইমেইল পরিবর্তন
+                    </a>
+                </div>
+                <div class="link item" id="sidebar-logout-link">
+                    <span><i class="sign out icon"></i>লগআউট</span>
+                </div>
+            </div>
+        </div>
+        <div class="title-margin-mobile"></div>
+        
+<div class="sixteen wide column container-padding">
+    <div class="ui stackable grid">
+        <div class="left floated left aligned six wide column">
+            <label class="page-title">প্রোফাইল</label>
+        </div>
+        <div class="right floated right aligned six wide column button-group-one mobile">
+            
+            
+                
+                    <a href="/nid-pub/citizen-home/profile/download-correction" id="download">
+                        <div class="ui popup-button big button"
+                             data-title="ডাউনলোড"
+                             data-content="সংশোধনের ফর্মটি ডাউনলোড করতে এই বাটনটি ক্লিক করুন"
+                             data-variation="small wide">ডাউনলোড
+                        </div>
+                    </a>
+                
+                
+            
+
+        </div>
+    </div>
+</div>
+<div class="sixteen wide column options container-padding">
+    <div class="ui form readonly-form">
+        
+            <div class="ui green message visible profile-step-message-padding">
+                <div class="header" style="text-align: center;">
+                    আপনার একটি অ্যাপ্লিকেশান পেন্ডিং রয়েছে
+                </div>
+            </div>
+        
+        <select class="data-tab-mobile" style="cursor: pointer">
+            <option value="first">ব্যক্তিগত তথ্য</option>
+            <option value="second">অন্যান্য তথ্য</option>
+            <option value="third">ঠিকানা</option>
+        </select>
+        <div class="ui top attached tabular menu data-tab-desktop">
+            <a class="active item" data-tab="first">ব্যক্তিগত তথ্য</a>
+            <a class="item" data-tab="second">অন্যান্য তথ্য</a>
+            <a class="item" data-tab="third">ঠিকানা</a>
+        </div>
+        <div class="ui bottom attached active non-bordered non-padded tab segment" data-tab="first">
+            <div class="ui stackable grid">
+                <div class="row readonly-form">
+                    <div class="four wide column">
+                        <div class="ui s-profile card">
+                            <div class="image">
+                                
+                                    
+                                        <img src="photo.jpg" alt="সুমাইয়া আক্তার" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;">
+                                    
+                                    
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="twelve wide column">
+                        <div class="ui three column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>নাম (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    সুমাইয়া আক্তার
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>নাম (ইংরেজি)</label>
+                                <span class="fixed-font-family-english16">
+                                    Sumya Akter
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>লিঙ্গ</label>
+                                <span class="fixed-font-family-bangla18">
+                                    মহিলা
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui three column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>রক্তের গ্রুপ</label>
+                                <span class="fixed-font-family-english16">
+                                    --
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>জন্ম নিবন্ধন নম্বর</label>
+                                <span class="fixed-font-family-english16">
+                                    00007915834100717
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>জন্ম তারিখ</label>
+                                <span class="fixed-font-family-english16">
+                                    11/12/2003
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui three column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>জন্মস্থান</label>
+                                <span class="fixed-font-family-bangla18">
+                                    পিরোজপুর
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row readonly-form">
+                    <div class="sixteen wide column">
+                        <h4>পিতার তথ্য</h4>
+                        <div class="ui three column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>পিতার নাম (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    ইমাদুল খান
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>পিতার এনআইডি</label>
+                                <span class="fixed-font-family-english16">
+                                    00007915834324300
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>মৃত্যুর সন (প্রযোজ্য ক্ষেত্রে)</label>
+                                <span class="fixed-font-family-english16">
+                                    --
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row readonly-form">
+                    <div class="sixteen wide column">
+                        <h4>মাতার তথ্য</h4>
+                        <div class="ui three column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>মাতার নাম (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    কুলসুম বেগম
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>মাতার এনআইডি</label>
+                                <span class="fixed-font-family-english16">
+                                    00007915834328301
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>মৃত্যুর সন (প্রযোজ্য ক্ষেত্রে)</label>
+                                <span class="fixed-font-family-english16">
+                                    --
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row readonly-form">
+                    <div class="sixteen wide column">
+                        <h4>স্বামী/স্ত্রীর তথ্য</h4>
+                        <div class="ui three column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>বৈবাহিক অবস্থা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    অবিবাহিত
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui three column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>স্বামী/স্ত্রীর নাম (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    --
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>স্বামী/স্ত্রীর এনআইডি</label>
+                                <span class="fixed-font-family-english16">
+                                    --
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>মৃত্যুর সন (প্রযোজ্য ক্ষেত্রে)</label>
+                                <span class="fixed-font-family-english16">
+                                    --
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom attached tab non-padded non-bordered segment" data-tab="second">
+            <div class="ui stackable grid">
+                <div class="row readonly-form">
+                    <div class="sixteen wide column" style="margin-bottom: 10px;">
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>শিক্ষাগত যোগ্যতা (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    মাধ্যমিক বা সমতুল্য
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>পেশা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    ছাত্র/ছাত্রী
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>অসমর্থতা</label>
+                                <span class="fixed-font-family-bangla18">--</span>
+                            </div>
+                            <div class="column field">
+                                <label>সনাক্তকরন চিহ্ন (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    --
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>টিন নম্বর</label>
+                                <span class="fixed-font-family-english16">
+                                    --
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>ড্রাইভিং লাইসেন্স নম্বর</label>
+                                <span class="fixed-font-family-english16">
+                                    --
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>পাসপোর্ট নম্বর</label>
+                                <span class="fixed-font-family-english16">
+                                    --
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>ধর্ম</label>
+                                <span class="fixed-font-family-bangla18">ইসলাম</span>
+                            </div>
+                        </div>
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>মোবাইল নম্বর</label>
+                                <span class="fixed-font-family-english16">
+                                    01706104226
+                                </span>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom attached tab non-padded non-bordered segment" data-tab="third">
+            <div class="ui stackable grid">
+                <div class="row readonly-form">
+                    <div class="sixteen wide column">
+                        <h4 class="address-title">বর্তমান ঠিকানা</h4>
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>বিভাগ</label>
+                                <span class="fixed-font-family-bangla18">
+                                    বরিশাল
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>জেলা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    পিরোজপুর
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>উপজেলা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    মঠবাড়ীয়া
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>আর.এম.ও</label>
+                                <span class="fixed-font-family-bangla18">
+                                    পল্লী
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>সিটি কর্পোরেশন অথবা পৌরসভা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>ইউনিয়ন</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দাউদখালী
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>মৌজা/মহল্লা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দেবত্র
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>ইউনিয়নের ওয়ার্ড নম্বর</label>
+                                <span class="universal-font-family">
+                                    2
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>গ্রাম/রাস্তা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দেবত্র
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>বাসা/হোল্ডিং নম্বর (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    ১২৫
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>পোস্ট অফিস (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দেবত্র
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>পোস্ট কোড</label>
+                                <span class="universal-font-family">
+                                    ৮৪৩১
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row readonly-form">
+                    <div class="sixteen wide column">
+                        <h4 class="address-title">স্থায়ী ঠিকানা <span>(এই ঠিকানায় ভোটার)</span></h4>
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>বিভাগ</label>
+                                <span class="fixed-font-family-bangla18">
+                                    বরিশাল
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>জেলা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    পিরোজপুর
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>উপজেলা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    মঠবাড়ীয়া
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>আর.এম.ও</label>
+                                <span class="fixed-font-family-bangla18">
+                                    পল্লী
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>সিটি কর্পোরেশন অথবা পৌরসভা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>ইউনিয়ন</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দাউদখালী
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>মৌজা/মহল্লা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দেবত্র
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>ইউনিয়নের ওয়ার্ড নম্বর</label>
+                                <span class="universal-font-family">
+                                    2
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ui four column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>গ্রাম/রাস্তা</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দেবত্র
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>বাসা/হোল্ডিং নম্বর (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    ১২৫
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>পোস্ট অফিস (বাংলা)</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দেবত্র
+                                </span>
+                            </div>
+                            <div class="column field">
+                                <label>পোস্ট কোড</label>
+                                <span class="universal-font-family">
+                                    ৮৪৩১
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="ui three column grid vertically padded grid stackable">
+                            <div class="column field">
+                                <label>ভোটার এরিয়া</label>
+                                <span class="fixed-font-family-bangla18">
+                                    দেবত্র (২নং ওয়ার্ডের অংশ)
+                                </span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal" class="ui modal">
+        <div class="header universal-font-family20">
+            ফিস/চার্জ
+        </div>
+        <div class="content">
+            <p class="universal-font-family20">আপনি যদি জাতীয় পরিচয়পত্র সংশোধন করাতে চান বা পুনরায় পেতে চান সে ক্ষেত্রে আপনাকে নির্দিষ্ট পরিমান ফি প্রদান করতে হবে। সংশোধন বা পুনরায় পেতে ফি এর পরিমান এই লিঙ্ক <a href="/nid-pub/fees" target="_blank">https://services.nidw.gov.bd/nid-pub/fees</a> এর মাধ্যমে জানা যাবে।<br> ফি প্রদানের নূন্যতম ৩০ মিনিট পর আপনি সংশোধন বা হারানোর জন্য আবেদন করতে পারবেন। ফি নিম্নোক্ত ব্যাংক এবং মোবাইল ব্যাংকিং এর মাধ্যমে প্রদান করা যাবে।<br></p>
+            <div class="ui list">
+                <div class="item">১. বিকাশ লিমিটেড।</div>
+                <div class="item">২. ডাচ্‌-বাংলা ব্যাংক এবং রকেট মোবাইল ব্যাংকিং।</div>
+                <div class="item">৩. ট্রাস্ট ব্যাংক লিমিটেড এবং টি-ক্যাশ মোবাইল ব্যাংকিং।</div>
+                <div class="item">৪. মিউচুয়াল ট্রাস্ট ব্যাংক লিমিটেড।</div>
+                <div class="item">৫. ওয়ান ব্যাংক লিমিটেড এবং ওকে ওয়ালেট মোবাইল ব্যাংকিং।</div>
+                <div class="item">৬. ফার্স্ট সিকিউরিটি ইসলামী ব্যাংক লিমিটেড।</div>
+                <div class="item">৭. ইউসিবি ফিনটেক কোম্পানি লিমিটেড এবং উপায় মোবাইল ব্যাংকিং।</div>
+                <div class="item">৮. সাউথইস্ট ব্যাংক লিমিটেড।</div>
+                <div class="item">৯. বাংলাদেশ কমার্স ব্যাংক লিমিটেড।</div>
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                বাতিল
+            </div>
+            <div class="ui positive right labeled icon button">
+                বহাল
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+
+    
+
+<script type="application/javascript">
+  $(document).ready(function () {
+    $('.button.popup-button').popup({
+      position: 'bottom right'
+    });
+
+    $('.popup-hover-top-center').popup({
+        on: 'hover',
+        position: 'top center',
+    });
+
+    $('.card .image.editable').dimmer({
+      on: 'hover'
+    });
+  });
+</script>
+    <script type="application/javascript">
+        $('.ui.top.attached.tabular.menu a.item').tab({history:false});
+    </script>
+</div>
+
+    </div>
+    <div class="sixteen wide column footer container-padding footer-margin">
+        <div class="ui stackable grid">
+            <div class="seven wide left floated column left-col footer-content">
+                <img src="logo-ec.png" width="130" height="auto" alt="বাংলাদেশ নির্বাচন কমিশন" />
+                <p>বাংলাদেশ নির্বাচন কমিশন</p>
+            </div>
+            <div class="six wide right floated column right-col footer-content">
+                <p>
+                    <span>ই-মেইলঃ </span>
+                    <span class="fixed-font-family-english">info@nidw.gov.bd</span>
+                </p>
+                <p>হেল্পলাইনঃ ১০৫, +৮৮ ০১৭০৮-৫০১২৬১</p>
+                <p>যোগাযোগের সময়ঃ রবিবার-বৃহস্পতিবার, সকাল ৯:০০টা - বিকাল ৫:০০টা পর্যন্ত।</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="application/javascript">
+    $("body").append('<form style="display:none;" action="/nid-pub/logout" method="post" id="logout-form"><input type="hidden" name="_csrf" value="4eadc7ea-2a8c-4be3-81de-c5baaef5dbc4"></form>');
+    $("#logout-link, #sidebar-logout-link").on("click", function(event) {
+        event.preventDefault();
+        $("#logout-form").submit();
+    });
+</script>
+
+
+
+
+
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167862701-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-167862701-1');
+    </script>
+
+
+</body>
+</html>
